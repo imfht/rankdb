@@ -1,28 +1,13 @@
 <template>
   <div>
-    <div style="background: aliceblue; min-height:60px" >
-      <nav style=" padding-top: 20px">
-        <router-link to="/" style="margin-right: 20px">
-        <a style="font-size: large;"> 省份排名</a>
-      </router-link>
-        |
-      <router-link to="/index" style="margin-right: 20px;margin-left: 20px">
-        <a style="font-size: large;"> 历史趋势</a>
-      </router-link>
-        |
-        <router-link to="/query" style="margin-left: 20px">
-        <a style="font-size: large;"> 资源检索</a>
-      </router-link>
-      </nav>
-    </div>
+    <Headers></Headers>
     <el-header>
-            <h1>全国IPv4/IPv6站点趋势一览</h1>
+            <h1>趋势一览</h1>
     </el-header>
-    <el-col :span="12">
-      <ve-gauge :data="percentData" ref="halo1" :title="percentTitle"></ve-gauge>
-      <!--<small style="text-align: center">全教育网IPv6占比</small>-->
-    </el-col>
-    <el-col :span="12">
+    <!--<el-col>-->
+      <!--<ve-gauge :data="percentData" ref="halo1" :title="percentTitle"></ve-gauge>-->
+    <!--</el-col>-->
+    <el-col>
     <ve-histogram :data="prov_data" ref="halo2" :title="provTitle">
     </ve-histogram>
       <!--<small>行政区统计</small>-->
@@ -39,15 +24,19 @@
 <script>
 import VeLine from 'v-charts/lib/line.common';
 import TabNav from 'element-ui/packages/tabs/src/tab-nav';
+import Headers from '@/components/Headers';
 
 export default {
-  components: { TabNav, VeLine },
+  components: { TabNav, VeLine, Headers },
   name: 'Index',
   mounted() {
     // console.log('ref is', this.$refs.halo1);
     this.$refs.halo1.echarts.resize();
     this.$refs.halo2.echarts.resize();
     this.$refs.halo3.echarts.resize();
+  },
+  created() {
+    this.my_init();
   },
   data() {
     this.percentTitle = {
@@ -65,18 +54,20 @@ export default {
       left: 'center',
       bottom: 20,
     };
+    this.total_rate = 10;
     return {
+      total_rate: 0,
+      percentData: {
+        columns: ['type', 'a', 'b', 'value'],
+        rows: [
+          { type: '占比', value: 100, a: this.total_rate, b: 2 },
+        ],
+      },
       activeName: '123',
       ruleForm: {},
       domainTable: [
         { domain: 'wawawa', id: '1', name: '上海市', all_count: 5000, ipv6_count: 4800, ipv6_rate: '80%' },
       ],
-      percentData: {
-        columns: ['type', 'a', 'b', 'value'],
-        rows: [
-          { type: '占比', value: 100, a: 81, b: 2 },
-        ],
-      },
       chartData: {
         columns: ['日期', 'IPv6站点数量', 'IPv4站点数量'],
         rows: [
@@ -91,16 +82,6 @@ export default {
       prov_data: {
         columns: ['省份/单位', 'IPv6占比'],
         rows: [
-          { '省份/单位': '上海市', IPv6占比: 92 },
-          { '省份/单位': '北京市', IPv6占比: 82 },
-          { '省份/单位': '河北省', IPv6占比: 72 },
-          { '省份/单位': '河南省', IPv6占比: 62 },
-          { '省份/单位': '山东省', IPv6占比: 60 },
-          { '省份/单位': '广东省', IPv6占比: 49 },
-          { '省份/单位': '四川省', IPv6占比: 46 },
-          { '省份/单位': '浙江省', IPv6占比: 45 },
-          { '省份/单位': '湖南省', IPv6占比: 42 },
-          { '省份/单位': '安徽省', IPv6占比: 20 },
         ],
       },
     };
@@ -108,6 +89,39 @@ export default {
   methods: {
     onSubmit() {
       // console.log('submit!');
+    },
+    compare(a, b) {
+      if (a.rate < b.rate) { return 1; }
+      if (a.rate > b.rate) { return -1; }
+      return 0;
+    },
+    buildChartData(chartList) {
+      const rtnValue = [];
+      let x;
+      chartList.sort(this.compare);
+      /* eslint-disable */
+      for (x in chartList) {
+        console.log(chartList[x]);
+        rtnValue.push({ '省份/单位': chartList[x].prov, IPv6占比: chartList[x].rate * 100 });
+      }
+      return rtnValue;
+    },
+    my_init() {
+      this.axios.get('/p/total').then((resp) => {
+        this.total_rate = resp.data.latest_total['0'].rate * 100;
+        this.percentData = {
+          columns: ['type', 'a', 'b', 'value'],
+          rows: [
+            { type: '占比', value: 100, a: this.total_rate, b: 2 },
+          ],
+        };
+      });
+      this.axios.get('/p/latest').then((resp) => {
+        const rows = this.buildChartData(resp.data.domaindict);
+        this.prov_data = { columns: ['省份/单位', 'IPv6占比'], rows };
+        console.log(this.prov_data);
+        // this.prov_data = this.buildChartData(resp.data.domaindict);
+      });
     },
   },
 };
