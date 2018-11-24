@@ -7,10 +7,10 @@
     <div>
       <el-form :inline="true" :model="SearchForm" style="width: 100%">
         <el-form-item>
-          <el-input v-model="SearchForm.keyword" style="width: 100%"></el-input>
+          <el-input v-model="msg" style="width: 100%"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button v-model="SearchForm.keyword" @click="onSubmit">搜索</el-button>
+          <el-button @click="onSubmit">搜索</el-button>
         </el-form-item>
       </el-form>
       <div class="pagination-container">
