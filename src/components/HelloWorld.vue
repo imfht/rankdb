@@ -25,12 +25,12 @@
             </el-table-column>
             <el-table-column
               prop="ipv6_count"
-              label="IPv6站点数量"
+              label="v6站点数量"
               sortable>
             </el-table-column>
             <el-table-column
               prop="rate"
-              label="IPv6站点占比"
+              label="v6站点占比"
               sortable>
               <template slot-scope="scope">
                 <span>{{scope.row.rate * 100 | rounding}}%</span>
