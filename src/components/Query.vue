@@ -2,7 +2,7 @@
   <div>
 <Headers></Headers>
     <el-header>
-            <h1>IPv6网络资源检索</h1>
+            <h1>IPv6 指南针</h1>
     </el-header>
     <div>
       <el-form :inline="true" :model="SearchForm" style="width: 100%">
@@ -13,6 +13,7 @@
           <el-button @click="onSubmit">搜索</el-button>
         </el-form-item>
       </el-form>
+      <div v-if="show">
       <div class="pagination-container">
       <el-pagination
         :current-page="query.page"
@@ -69,6 +70,7 @@
         @current-change="handleCurrentChange"/>
     </div>
     </div>
+      </div>
     <footer>
       ©️上海交通大学网络信息中心
     </footer>
@@ -107,6 +109,7 @@ export default {
       loading: false,
       hits: [],
       num: 1,
+      show: false,
       msg: '',
       total: 0,
       query: {
@@ -133,6 +136,7 @@ export default {
         });
     },
     onSubmit() {
+      this.show = true
       this.query.page = 1;
       this.fetch();
     },

@@ -2,7 +2,7 @@
     <div style="background: aliceblue; min-height:60px" >
       <nav style=" padding-top: 20px">
         <router-link to="/" style="margin-right: 20px">
-        <a style="font-size: large;"> 省份排名</a>
+        <a style="font-size: large;"> 分区排名</a>
       </router-link>
         |
       <router-link to="/index" style="margin-right: 20px;margin-left: 20px">
