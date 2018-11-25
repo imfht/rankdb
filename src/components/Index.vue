@@ -14,8 +14,8 @@
     </el-col>
     <hr style="color: aliceblue">
     <el-col :span="24">
-    <ve-line :data="chartData" :title="wholeTitle" ref="halo3"></ve-line>
-      </el-col>
+      <ve-line :data="chartData" :title="wholeTitle" ref="halo3"></ve-line>
+    </el-col>
     <footer>
       ©️上海交通大学网络信息中心
     </footer>

@@ -41,38 +41,38 @@
     <div class="mydiv">
       <el-row :gutter="24" style="margin: 0px auto;">
         <el-col :xs="24" :xl="{span: 12, offset: 6}">
-        <el-table
-          :data="domainTable"
-          v-loading="loading"
-          style="margin: 0px auto;">
-          <el-table-column
-            type="index"
-            label="排名">
-          </el-table-column>
-          <el-table-column
-            prop="cn_name"
-            label="学校">
-          </el-table-column>
-          <!--<el-table-column-->
-          <!--prop="total_count"-->
-          <!--label="站点总数量"-->
-          <!--sortable-->
-          <!--width="180">-->
-          <!--</el-table-column>-->
-          <el-table-column
-            prop="ipv6_count"
-            label="v6站点数"
-            sortable>
-          </el-table-column>
-          <el-table-column
-            prop="rate"
-            label="v6普及率"
-            sortable>
-            <template slot-scope="scope">
-              <span>{{scope.row.rate * 100 | rounding}}%</span>
-            </template>
-          </el-table-column>
-        </el-table>
+          <el-table
+            :data="domainTable"
+            v-loading="loading"
+            style="margin: 0px auto;">
+            <el-table-column
+              type="index"
+              label="排名">
+            </el-table-column>
+            <el-table-column
+              prop="cn_name"
+              label="学校">
+            </el-table-column>
+            <!--<el-table-column-->
+            <!--prop="total_count"-->
+            <!--label="站点总数量"-->
+            <!--sortable-->
+            <!--width="180">-->
+            <!--</el-table-column>-->
+            <el-table-column
+              prop="ipv6_count"
+              label="v6站点数"
+              sortable>
+            </el-table-column>
+            <el-table-column
+              prop="rate"
+              label="v6普及率"
+              sortable>
+              <template slot-scope="scope">
+                <span>{{scope.row.rate * 100 | rounding}}%</span>
+              </template>
+            </el-table-column>
+          </el-table>
         </el-col>
       </el-row>
       <footer>
@@ -144,7 +144,12 @@
       init() {
         this.axios.get(`/p/${this.$route.params.unit_code}/sub`)
           .then((resp) => {
-              this.domainTable = resp.data.sublist.sort(this.compare);
+              const data = resp.data.sublist.sort(this.compare);
+              let i;
+              for (i = 0; i < data.length; i++) {
+                data[i].ipv6_count = parseInt(data[i].ipv6_count);
+              }
+              this.domainTable = data;
               this.loading = false;
             },
           )
