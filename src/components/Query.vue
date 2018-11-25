@@ -26,10 +26,12 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"/>
     </div>
-    <el-table border fit highlight-current-row style="width: 100%" :data="hits">
-      <el-table-column align="center" label="id" type="index" width="80">
+        <el-row :gutter="24" style="margin: 0px auto;">
+        <el-col :xs="24" :xl="{span: 12, offset: 6}">
+    <el-table fit highlight-current-row style="width: 100%" :data="hits">
+      <el-table-column align="center" label="#" type="index">
       </el-table-column>
-      <el-table-column label="标题" width="400px">
+      <el-table-column label="标题">
         <template slot-scope="scope">
           <span>
             <a target="_blank" :href="scope.row._source['url']">{{scope.row._source['html']['title']}}</a>
@@ -40,7 +42,7 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="IPv6地址" width="250">
+      <el-table-column align="center" label="IPv6地址">
         <template slot-scope="scope">
           <span>
             <el-tag>{{scope.row._source.ip}}</el-tag>
@@ -69,6 +71,8 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"/>
     </div>
+        </el-col>
+        </el-row>
     </div>
       </div>
     <footer>
