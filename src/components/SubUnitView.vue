@@ -18,7 +18,7 @@
     </div>
     <div class="mydiv">
       <el-row :gutter="24" style="margin: 0px auto;">
-        <el-col :xs="24" :xl="{span: 12, offset: 6}">
+        <el-col :xs="24" :xl="{span: 12, offset: 6}" :sm="{span: 12, offset: 6}" :md="{span: 12, offset: 6}">
           <el-table
             :data="domainTable"
             v-loading="loading"
