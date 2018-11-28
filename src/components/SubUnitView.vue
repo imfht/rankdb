@@ -156,6 +156,7 @@
 
 <style>
   h1, h2 {
+    font-size: x-large;
     font-weight: normal;
   }
 
