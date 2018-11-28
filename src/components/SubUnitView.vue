@@ -3,7 +3,7 @@
     <Headers></Headers>
     <div class="mydiv">
       <el-header>
-        <h1>安徽省IPv6网站一览</h1>
+        <h1>{{ father_name }}IPv6网站一览</h1>
       </el-header>
       <div class="block">
         <span class="demonstration">时光机：</span>
@@ -12,31 +12,9 @@
           align="right"
           type="date"
           placeholder="选择日期"
-          :picker-options="pickerOptions1">
+          >
         </el-date-picker>
       </div>
-      <!--<el-dropdown>-->
-      <!--<el-button type="primary" class="float_right">-->
-      <!--历史记录<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-      <!--</el-button>-->
-      <!--<el-dropdown-menu slot="dropdown">-->
-      <!--<el-dropdown-item>第40周</el-dropdown-item>-->
-      <!--<el-dropdown-item>第41周</el-dropdown-item>-->
-      <!--<el-dropdown-item>第32周</el-dropdown-item>-->
-      <!--<el-dropdown-item>第30周</el-dropdown-item>-->
-      <!--<el-dropdown-item>第12周</el-dropdown-item>-->
-      <!--</el-dropdown-menu>-->
-      <!--</el-dropdown>-->
-      <!--<span style="margin-top: 10px">-->
-      <!--<span>首页</span>-->
-      <!--<span>/</span>-->
-      <!--<span >山东省</span>-->
-      <!--<span>/</span>-->
-      <!--<span >济南市</span>-->
-      <!--<span>/</span>-->
-      <!--&lt;!&ndash;TODO 加上可点击的link&ndash;&gt;-->
-      <!--<span>历下区</span>-->
-      <!--</span>-->
     </div>
     <div class="mydiv">
       <el-row :gutter="24" style="margin: 0px auto;">
@@ -47,7 +25,7 @@
             style="margin: 0px auto;">
             <el-table-column
               type="index"
-              label="排名">
+              label="No.">
             </el-table-column>
             <el-table-column
               prop="cn_name"
@@ -151,6 +129,7 @@
               }
               this.domainTable = data;
               this.loading = false;
+              this.father_name = resp.data['father_name'];
             },
           )
           .catch((error) => {

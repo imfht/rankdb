@@ -12,6 +12,11 @@
         <router-link to="/query" style="margin-left: 20px">
         <a style="font-size: large;"> 资源检索</a>
       </router-link>
+        </router-link>
+        |
+        <router-link to="/about" style="margin-left: 20px">
+        <a style="font-size: large;"> 关于本站</a>
+      </router-link>
       </nav>
     </div>
 </template>

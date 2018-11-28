@@ -45,7 +45,7 @@ export default {
       bottom: 20,
     };
     this.provTitle = {
-      text: '各行政区IPv6网站占比（前十名）',
+      text: '各行政区IPv6网站占比',
       left: 'center',
       bottom: 20,
     };

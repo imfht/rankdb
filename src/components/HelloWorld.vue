@@ -6,14 +6,14 @@
         <h1>高校IPv6网站瞭望台</h1>
       </el-header>
       <el-row :gutter="24" style="margin: 0px auto;">
-        <el-col :xs="24" :xl="{span: 12, offset: 6}">
+        <el-col :xs="24" :xl="{span: 12, offset: 6}" :sm="{span: 12, offset: 6}" :md="{span: 12, offset: 6}">
           <el-table
             :data="domainTable"
             v-loading="loading"
             style="margin: 0px auto;">
             <el-table-column
               type="index"
-              label="排名">
+              label="No.">
             </el-table-column>
             <el-table-column
               prop="prov"
@@ -25,12 +25,12 @@
             </el-table-column>
             <el-table-column
               prop="ipv6_count"
-              label="v6站点数量"
+              label="v6站点数"
               sortable>
             </el-table-column>
             <el-table-column
               prop="rate"
-              label="v6站点占比"
+              label="v6站点普及率"
               sortable>
               <template slot-scope="scope">
                 <span>{{scope.row.rate * 100 | rounding}}%</span>
